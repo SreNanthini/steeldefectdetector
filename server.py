@@ -6,6 +6,19 @@ import os
 import time
 from datetime import datetime
 
+# ── Auto-download model if not present (for cloud deployment) ──
+import urllib.request
+
+MODEL_URL = "https://drive.google.com/file/d/1EwMp6mch4lst4UCpOLpZng8-fH69FuvZ/view?usp=sharing"  # see Step 2 below
+
+if not os.path.exists(MODEL_PATH) and MODEL_URL:
+    print(f"  Downloading model from {MODEL_URL} ...")
+    try:
+        urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
+        print(f"  ✅ Model downloaded successfully")
+    except Exception as e:
+        print(f"  ❌ Download failed: {e}")
+
 # ── App setup ────────────────────────────────────────────────────
 app = Flask(__name__)
 CORS(app)
